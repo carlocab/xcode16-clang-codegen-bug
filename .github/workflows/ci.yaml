@@ -31,7 +31,7 @@ jobs:
       - run: brew link --force llvm
         if: runner.arch == 'arm64'
 
-      - run: echo "CC=$(brew --prefix llvm)/bin/clang" >>"${GITHUB_ENV}"
+      - run: echo "$(brew --prefix llvm)/bin" >>"${GITHUB_PATH}"
 
       - name: Test Compiler Bug
         run: make test
