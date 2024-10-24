@@ -14,6 +14,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [12, 13, 14]
+        commit:
+          - '3b4600424022a33c7f49ea0e7aa0082b2a812f93'
+          - 'd717e2ab6aec1fcd8212e45df56d669962b8ac15'
+          - '64b211a64089eff0c5148f3a031ad93d097881f3'
+          - 'cb0d8e5723259b7ea8c4930c2a67bd6c539baf95'
+          - '2f37df6e96c3f656753e570f1837ef80c55e7ec7'
+          - '1a527a15fe19c9ed548945e523219ea352deba7a'
 
     runs-on: macos-${{ matrix.os }}
 
@@ -22,7 +29,9 @@ jobs:
 
       - run: brew update
 
-      - run: git -C "$(brew --repository Homebrew/core)" checkout 3b4600424022a33c7f49ea0e7aa0082b2a812f93
+      - run: git -C "$(brew --repository Homebrew/core)" checkout "${COMMIT}"
+        env:
+          COMMIT: ${{ matrix.commit }}
 
       - run: brew deps llvm | xargs brew fetch --concurrency=64 llvm
 
